@@ -190,7 +190,7 @@ header {
         .intro-heading {
             @include ew-font;
             font-weight: 700;
-            font-size: 50px;
+            font-size: 40px;
             line-height: 50px;
             margin-bottom: 25px;
         }
@@ -200,7 +200,7 @@ header {
 @media(min-width:768px) {
     header {
         .intro-text {
-            padding-top: 300px;
+            padding-top: 200px;
             padding-bottom: 200px;
             .intro-lead-in {
                 @include ew-font;
@@ -513,6 +513,19 @@ section {
             }
         }
     }
+}
+
+@media only screen and (max-width: 768px) {
+  .biglogo {
+      width: 73px;
+      height: 40px;
+  }
+}
+.biglogo {
+    vertical-align: baseline;
+    position: relative;
+    top: 2px;
+    margin-bottom: 10px;
 }
 
 // Team Section
