@@ -75,10 +75,10 @@ h1, h2, h3, h4, h5, h6 {
 .btn-xl {
     @include button-variant(white, $theme-primary, $theme-primary);
     @include heading-font;
-    font-weight: 700;
+    font-weight: 500;
     border-radius: 3px;
-    font-size: 18px;
-    padding: 20px 40px;
+    font-size: 14px;
+    padding: 15px 30px;
 }
 
 // Custom Navigation Bar
@@ -185,14 +185,14 @@ header {
             font-style: italic;
             font-size: 22px;
             line-height: 22px;
-            margin-bottom: 25px;
+            margin-bottom: 45px;
         }
         .intro-heading {
             @include ew-font;
             font-weight: 700;
             font-size: 40px;
             line-height: 50px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
     }
 }
@@ -207,16 +207,28 @@ header {
                 font-style: italic;
                 font-size: 40px;
                 line-height: 40px;
-                margin-bottom: 25px;
+                margin-bottom: 65px;
             }
             .intro-heading {
                 @include ew-font;
                 font-weight: 700;
                 font-size: 75px;
                 line-height: 75px;
-                margin-bottom: 50px;
+                margin-bottom: 20px;
             }
         }
+
+
+        .btn-xl {
+            @include button-variant(white, $theme-primary, $theme-primary);
+            @include heading-font;
+            font-weight: 700;
+            border-radius: 3px;
+            font-size: 18px;
+            padding: 20px 40px;
+        }
+
+
     }
 }
 
