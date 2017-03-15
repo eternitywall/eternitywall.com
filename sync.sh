@@ -1,2 +1,2 @@
 jekyll build
-rsync -vr _site/ riccardo.casatta.it:/var/www/eternitywall.com/html/
+rsync -vr --exclude node_modules/ _site/ riccardo.casatta.it:/var/www/eternitywall.com/html/
