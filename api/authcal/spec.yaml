@@ -1,0 +1,180 @@
+swagger: '2.0'
+info:
+  description: |
+    This is the OpenTimestamps authenticated calendar API provided by [Eternity Wall](https://eternitywall.com).<br>
+    The available [OpenTimestamps](https://opentimestamps.org) public calendars provide almost the same interface but they are not authenticated and don't provide any SLA.
+    Another difference is that if you loose the receipt public calendars doesn't store all the data needed from the caller's hash to the blockchain and thus you loose your timestamp. This calendar store the relevant information, thus providing the caller's hash you can retrieve all the timestamp
+  version: 0.1.0
+  title: OpenTimestamps authenticated calendar
+  #termsOfService: https://eternitywall.com/terms/
+  contact:
+    email: api@eternitywall.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+ - https
+host: api.eternitywall.com
+basePath: /authcal/v1
+
+
+paths:
+  /digest:
+    post:
+      description: Post a document `{digest}`, usually a hash of a document, to timestamp on public blockchain. This method must be authenticated by providing a signature in the header, the message to use is the digest encoded as a hex string. (Note that examples show hex encoded string but the api use binary values)
+      operationId: postdigest
+      consumes:
+      - application/octet-stream
+      produces:
+      - application/octet-stream
+      parameters:
+      - in: body
+        description: The `{digest}` to timestamp in **binary**, examples show hex string for comprehension but the API consumes and produce data in not encoded binary (*application/octet-stream*).
+        required: true
+        type: binary
+        schema:
+            $ref: '#/definitions/Digest'
+      responses:
+        200:
+          description: The request is correctly accepted by the server which immediately return the receipt in incomplete state (no writes on the blockchain yet). By later calling the */timestamp* method the caller get all the timestamp information of this {digest}.
+          schema:
+            $ref: '#/definitions/IncompleteReceipt'
+        400:
+          description: Bad input parameters, for example no content in the body of the request.
+        401:
+          description: The computed signature does not match. Verify with the vendor that your public key is enabled (To create your eckey pair you can use this [tool](https://github.com/eternitywall/create-eckey)). Verify that your signing the correct message (the hex string representing the submitted digest). Verify you are using the correct signing algorithm (bitcoin signing text messages)
+      security:
+        - signature: []
+  /timestamp/{digest}:
+    get:
+      description: Get a timestamp receipt providing the `digest`
+      operationId: getdigest
+      produces:
+      - application/octet-stream
+      parameters:
+      - in: path
+        name: digest
+        description: Retrieve the OpenTimestamps receipt of the document identified by `digest` previosly timestamped.
+        required: true
+        type: string
+        schema:
+            $ref: '#/definitions/Digest'
+      - in: query
+        name: allow-dubious
+        description: if this parameter exists the receipt will contain also commit on blockchain considered *dubious* from timestamp perspective by the OpenTimestamps developer (eg. Ethereum)
+      responses:
+        200:
+          description: The request is correctly accepted by the server which return a complete receipt if the timestamp transaction is correctly inserted in the bitcoin blockchain and 6 confirmation is passed (to avoid possible reorgs). If the receipt is still pending the IncompleteReceipt is returned.
+          schema:
+            $ref: '#/definitions/CompleteReceipt'
+        400:
+          description: Bad input parameters. Verify the {digest} is correctly encoded as hex string.
+        401:
+          description: The computed signature does not match. Verify with the vendor that your public key is enabled (To create your eckey pair you can use this [tool](https://github.com/eternitywall/create-eckey)). Verify that your signing the correct message (the hex string representing the submitted digest). Verify you are using the correct signing algorithm (bitcoin signing text messages).
+      security:
+        - signature: []
+
+securityDefinitions:
+  signature:
+    description: The used signature is the bitcoin message signature using ECDSA with the curve secp256k1. What is being signed is specified in the relative method description. Both the [Java](https://github.com/opentimestamps/java-opentimestamps) and the [Javascript](https://github.com/opentimestamps/javascript-opentimestamps) implementation of OpenTimestamps perform this authentication through signature [here](https://github.com/opentimestamps/javascript-opentimestamps/blob/master/src/calendar.js#L91) and [here](https://github.com/opentimestamps/java-opentimestamps/blob/master/src/main/java/com/eternitywall/ots/Calendar.java#L68).
+    name: x-signature
+    type: string
+    in: header
+    
+definitions:
+  Digest:
+    type: "binary"
+    description: >-
+      A digest in **binary**, usually some sort of hash of a document.<br>
+      Examples represent this value as an hex string but the API consumes and produce binary data"
+    example: "c775d5cc6dab23684842dc86ffcffb34c8022f0819f6729cbd9768cabd25b5af"
+
+  IncompleteReceipt:
+    type: "binary"
+    description:
+      "An OpenTimestamps incomplete receipt in binary format.<br>
+      Incomplete means to prove the timestamps it trusts the calendar (in this case *https://alice.btc.calendar.opentimestamps.org*) will provide the necessary information to link the digest to the blockchain. Once upgraded to a CompleteReceipt the verification is totally independent from the calendar.<br>
+      The example is the hex representation of the binary of a receipt, the following is the textual representation (which is the verbose info output from the [reference](https://github.com/opentimestamps/opentimestamps-client) lib `ots -v info examples/incomplete.txt.ots`)
+      <div style=\"font-family: courier; overflow-x: scroll; border-style: solid; border-width: 1px; padding: 5px;\">
+      File sha256 hash: 05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9
+      <br>Timestamp:
+        <br>append e754bf93806a7ebaa680ef7bd0114bf4 == 05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9e754bf93806a7ebaa680ef7bd0114bf4
+        <br>sha256 == cd567f5aa9f68cfbece1ca17b4b72ad3079a3e4bff80efe131419bd02138e425
+        <br>append b573e8850cfd9e63d1f043fbb6fc250e == cd567f5aa9f68cfbece1ca17b4b72ad3079a3e4bff80efe131419bd02138e425b573e8850cfd9e63d1f043fbb6fc250e
+        <br>sha256 == 6716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c6
+        <br>prepend 57cfa5c4 == 57cfa5c46716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c6
+        <br>append 6fb1ac8d4e4eb0e7 == 57cfa5c46716df9bd9e83595bce439c58108d8fcc1678f30d4c6731c3f1fa6c79ed712c66fb1ac8d4e4eb0e7
+        <br>verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')
+      </div>"
+
+    example: "004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e89294010805c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9f010e754bf93806a7ebaa680ef7bd0114bf408f010b573e8850cfd9e63d1f043fbb6fc250e08f10457cfa5c4f0086fb1ac8d4e4eb0e70083dfe30d2ef90c8e2e2d68747470733a2f2f616c6963652e6274632e63616c656e6461722e6f70656e74696d657374616d70732e6f7267"
+
+
+  CompleteReceipt:
+    type: "binary"
+    description:
+      "An OpenTimestamps receipt in binary format. This receipt contains all the information to prove the digest `05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9` commit to the bitcoin blockchain. The output is not in verbose mode as the previous so it doesn't show intermediate result<br>
+      <div style=\"font-family: courier; overflow-x: scroll; border-style: solid; border-width: 1px; padding: 5px;\">
+      File sha256 hash: 05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9
+      <br>Timestamp:
+      <br>append e754bf93806a7ebaa680ef7bd0114bf4
+      <br>sha256
+      <br>append b573e8850cfd9e63d1f043fbb6fc250e
+      <br>sha256
+      <br>prepend 57cfa5c4
+      <br>append 6fb1ac8d4e4eb0e7
+      <br>verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')
+      <br>sha256
+      <br>prepend 6563bb432a829ac8d6c54d1a9330d2240664cad8338dd05e63eec12a18a68d50
+      <br>sha256
+      <br>append ba83ddbe2bd6772b4584b46eaed23606b712dd740a89e99e927571f77f64aa21
+      <br>sha256
+      <br>prepend 193c81e70e4472b52811fe7837ce1293b1d3542b244f27f44182af8287fc9f4e
+      <br>sha256
+      <br>prepend c6c57696fcd39b4d992477889d04e6882829f5fe556304a281dce258b78a1f07
+      <br>sha256
+      <br>prepend 0100000001b592ca038eaa9c1b698a049b09be8ee8972b5d0eca29c19946027ba9248acb03000000004847304402200f992d5dbec6edb143f76c14e4538e0a50d66bae27c683cf4291e475287ec6af022010bae9443390aadbd2e2b8b9f757beea26d3f5c345f7e6b4d81b3d390edd381801fdffffff022eb142000000000023210338b2490eaa949538423737cd83449835d1061dca88f4ffaca7181bcac67d2095ac0000000000000000226a20
+      <br>append 678a0600
+      <br>&#35; Bitcoin transaction id 78a6be65c8ad4136f4575e94506648490a56a4b3b1fd4618854cc0e80248606c
+      <br>sha256
+      <br>sha256
+      <br>prepend 977ac39d89bb8b879d4a2c38fca48a040c82637936707fc452c9db1390b515c8
+      <br>sha256
+      <br>sha256
+      <br>append 74268b23e614997d18c7c063d8d82d7e1db57b5fc4346cc47ac2c46d54168d71
+      <br>sha256
+      <br>sha256
+      <br>prepend 560c45b854f8507c8bfacf2662fef269c208a7e5df5c3145cbce417ecacc595e
+      <br>sha256
+      <br>sha256
+      <br>prepend 0dba8721b9cd4ac7c2fcc7e15ba2cb9f2906bfc577c212747cd352d61b5d7fdb
+      <br>sha256
+      <br>sha256
+      <br>prepend 81107a010d527d18baa874bc99c19a3a7a25dfe110a4c8985bf30f6c3e77baed
+      <br>sha256
+      <br>sha256
+      <br>append ca3cdcd7093498b3f180b38a9773207e52fca992c2db1d660fdfa1b329500c39
+      <br>sha256
+      <br>sha256
+      <br>append ca6c6464dd02ced64c9c82246ccfc626caa78d9e624cc11013e3b4bbc09e9891
+      <br>sha256
+      <br>sha256
+      <br>append 1c7ae0feac018fa19bd8459a4ae971b3e6c816a87254317e0a9f0ec9425ba761
+      <br>sha256
+      <br>sha256
+      <br>prepend 90263a73e415a975dc07706772dbb6200ef0d0a23006218e65d4a5d811206730
+      <br>sha256
+      <br>sha256
+      <br>prepend 79530163b0d912249438628bd791ac9402fa707eb314c6237b0ef90271625c84
+      <br>sha256
+      <br>sha256
+      <br>verify BitcoinBlockHeaderAttestation(428648)
+      <br>&#35; Bitcoin block merkle root 078cdde9c89f2e3c58c96b1658627fd9298c63c6618954ea24ac3b5a13fe18da
+      </div>"
+
+    example: >-
+      004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e89294010805c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9f010e754bf93806a7ebaa680ef7bd0114bf408f010b573e8850cfd9e63d1f043fbb6fc250e08f10457cfa5c4f0086fb1ac8d4e4eb0e7ff0083dfe30d2ef90c8e2e2d68747470733a2f2f616c6963652e6274632e63616c656e6461722e6f70656e74696d657374616d70732e6f726708f1206563bb432a829ac8d6c54d1a9330d2240664cad8338dd05e63eec12a18a68d5008f020ba83ddbe2bd6772b4584b46eaed23606b712dd740a89e99e927571f77f64aa2108f120193c81e70e4472b52811fe7837ce1293b1d3542b244f27f44182af8287fc9f4e08f120c6c57696fcd39b4d992477889d04e6882829f5fe556304a281dce258b78a1f0708f1ae010100000001b592ca038eaa9c1b698a049b09be8ee8972b5d0eca29c19946027ba9248acb03000000004847304402200f992d5dbec6edb143f76c14e4538e0a50d66bae27c683cf4291e475287ec6af022010bae9443390aadbd2e2b8b9f757beea26d3f5c345f7e6b4d81b3d390edd381801fdffffff022eb142000000000023210338b2490eaa949538423737cd83449835d1061dca88f4ffaca7181bcac67d2095ac0000000000000000226a20f004678a06000808f120977ac39d89bb8b879d4a2c38fca48a040c82637936707fc452c9db1390b515c80808f02074268b23e614997d18c7c063d8d82d7e1db57b5fc4346cc47ac2c46d54168d710808f120560c45b854f8507c8bfacf2662fef269c208a7e5df5c3145cbce417ecacc595e0808f1200dba8721b9cd4ac7c2fcc7e15ba2cb9f2906bfc577c212747cd352d61b5d7fdb0808f12081107a010d527d18baa874bc99c19a3a7a25dfe110a4c8985bf30f6c3e77baed0808f020ca3cdcd7093498b3f180b38a9773207e52fca992c2db1d660fdfa1b329500c390808f020ca6c6464dd02ced64c9c82246ccfc626caa78d9e624cc11013e3b4bbc09e98910808f0201c7ae0feac018fa19bd8459a4ae971b3e6c816a87254317e0a9f0ec9425ba7610808f12090263a73e415a975dc07706772dbb6200ef0d0a23006218e65d4a5d8112067300808f12079530163b0d912249438628bd791ac9402fa707eb314c6237b0ef90271625c840808000588960d73d7190103e8941a
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
