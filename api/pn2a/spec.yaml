@@ -183,7 +183,7 @@ securityDefinitions:
     in: header
   signature:
     description: The used signature is the bitcoin message signature. What is being signed is specified in the relative method description.
-    name: signature
+    name: x-signature
     type: string
     in: header
 
