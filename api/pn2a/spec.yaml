@@ -169,10 +169,10 @@ paths:
               value:
                 numbers:
                     -
-                      number: "00393296730576"
+                      number: "00393295555555"
                       address: "n1o1Pqt2sCNwKiY5eYx5HXoFXn7VKcefXi"
                     -
-                      number: ""
+                      number: "00413335555555"
                       address: "n1WX9q5ACfEJxu1KRJSNVHLZxVBHage5Nj"
               code: 0
       security:
