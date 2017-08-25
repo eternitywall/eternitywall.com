@@ -127,7 +127,12 @@ paths:
       parameters:
       - name: number
         in: path
-        description: The mobile number to verify
+        description: The mobile number of which I want to update the address
+        required: true
+        type: string
+      - name: new_address
+        in: formData
+        description: The new address
         required: true
         type: string
       responses:
