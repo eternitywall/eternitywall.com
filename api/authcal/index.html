@@ -50,7 +50,7 @@
               </section> -->
           <h5>Schema Definitions</h5>
           <a href="#definition-Digest"> Digest </a>
-          <a href="#definition-Verify"> Verify </a>
+          <a href="#definition-Attestations"> Attestations </a>
           <a href="#definition-IncompleteReceipt"> IncompleteReceipt </a>
           <a href="#definition-Result"> Result </a>
           <a href="#definition-CompleteReceipt"> CompleteReceipt </a>
@@ -464,7 +464,7 @@
                       <div class="prop-title">200 OK</div>
                       <div class="prop-ref">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/Verify">Verify</a>
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
                         </span>
                       </div>
                       <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
@@ -484,9 +484,22 @@
                     <span>(200 OK)</span>
                   </h5>
                   <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
-  <span class="hljs-attr">&quot;timestamp&quot;</span>: {
-    <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
-    <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;ok&quot;</span>,
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;Everything is ok!&quot;</span>,
+  <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: {
+    <span class="hljs-attr">&quot;attestations&quot;</span>: [
+      {
+        <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1432825200</span>,
+        <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;May 28 2015 (UTC)&quot;</span>,
+        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Bitcoin&quot;</span>
+      },
+      {
+        <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1500000000</span>,
+        <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;Jul 14 2017 (UTC)&quot;</span>,
+        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Ethereum&quot;</span>
+      }
+    ]
   }
 }
 </code></pre>
@@ -523,9 +536,9 @@
               </div>
             </div>
           </div>
-          <div id="definition-Verify" class="definition panel" data-traverse-target="definition-Verify">
+          <div id="definition-Attestations" class="definition panel" data-traverse-target="definition-Attestations">
             <h2 class="panel-title">
-              <a name="/definitions/Verify"></a>Verify: application/json
+              <a name="/definitions/Attestations"></a>Attestations: application/json
               <!-- <span class="json-property-type"><span class="json-property-type">application/json</span>
               <span class="json-property-range" title="Value limits"></span>
               
@@ -542,10 +555,18 @@
                 <section>
                   <h5>Example</h5>
                   <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
-  <span class="hljs-attr">&quot;timestamp&quot;</span>: {
-    <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
-    <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
-  }
+  <span class="hljs-attr">&quot;attestations&quot;</span>: [
+    {
+      <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1432825200</span>,
+      <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;May 28 2015 (UTC)&quot;</span>,
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Bitcoin&quot;</span>
+    },
+    {
+      <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1500000000</span>,
+      <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;Jul 14 2017 (UTC)&quot;</span>,
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Ethereum&quot;</span>
+    }
+  ]
 }
 </code></pre>
                   <!-- </div> -->
@@ -638,7 +659,7 @@
                       <span class="json-property-name">value:</span>
                       <span class="json-property-type">
                         <span class="json-schema-ref-object">
-                          <a class="json-schema-ref" href="#/definitions/Verify">Verify</a>
+                          <a class="json-schema-ref" href="#/definitions/Attestations">Attestations</a>
                         </span>
                       </span>
                       <span class="json-property-range" title="Value limits"></span>
@@ -654,10 +675,18 @@
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;Everything is ok!&quot;</span>,
   <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">0</span>,
   <span class="hljs-attr">&quot;value&quot;</span>: {
-    <span class="hljs-attr">&quot;timestamp&quot;</span>: {
-      <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
-      <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
-    }
+    <span class="hljs-attr">&quot;attestations&quot;</span>: [
+      {
+        <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1432825200</span>,
+        <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;May 28 2015 (UTC)&quot;</span>,
+        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Bitcoin&quot;</span>
+      },
+      {
+        <span class="hljs-attr">&quot;unixTimestamp&quot;</span>: <span class="hljs-number">1500000000</span>,
+        <span class="hljs-attr">&quot;humanReadable&quot;</span>: <span class="hljs-string">&quot;Jul 14 2017 (UTC)&quot;</span>,
+        <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;Ethereum&quot;</span>
+      }
+    ]
   }
 }
 </code></pre>
