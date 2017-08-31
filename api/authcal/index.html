@@ -40,9 +40,19 @@
           <!-- </li> -->
           <!-- </ul>
               </section> -->
+          <!-- <section>
+                <a href="#path--verify--digest-">/verify/{digest}</a>
+                <ul> -->
+          <!-- <li> -->
+          <a href="#operation--verify--digest--post"> POST /verify/{digest} </a>
+          <!-- </li> -->
+          <!-- </ul>
+              </section> -->
           <h5>Schema Definitions</h5>
           <a href="#definition-Digest"> Digest </a>
+          <a href="#definition-Verify"> Verify </a>
           <a href="#definition-IncompleteReceipt"> IncompleteReceipt </a>
+          <a href="#definition-Result"> Result </a>
           <a href="#definition-CompleteReceipt"> CompleteReceipt </a>
         </nav>
       </div>
@@ -377,6 +387,114 @@
               </div>
             </div>
           </div>
+          <span id="path--verify--digest-"></span>
+          <div id="operation--verify--digest--post" class="operation panel" data-traverse-target="operation--verify--digest--post">
+            <h2 class="operation-title">
+              <span class="operation-name">
+                <span class="operation-name">POST</span>
+                <span class="operation-path">/verify/{digest}</span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Verify a timestamp receipt providing the <code>digest</code>. This API method is provided for convenience but by asking our API you are trusting the answer from the server while you could verify by yourself if you have a blockchain.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/CompleteReceipt">CompleteReceipt</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>The ots
+                        <strong>binary</strong> receipt to verify.</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">digest</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>the document <code>digest</code> to verify.</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">path</div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/octet-stream</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json"><span class="hljs-string">&quot;004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e89294010805c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9f010e754bf93806a7ebaa680ef7bd0114bf408f010b573e8850cfd9e63d1f043fbb6fc250e08f10457cfa5c4f0086fb1ac8d4e4eb0e7ff0083dfe30d2ef90c8e2e2d68747470733a2f2f616c6963652e6274632e63616c656e6461722e6f70656e74696d657374616d70732e6f726708f1206563bb432a829ac8d6c54d1a9330d2240664cad8338dd05e63eec12a18a68d5008f020ba83ddbe2bd6772b4584b46eaed23606b712dd740a89e99e927571f77f64aa2108f120193c81e70e4472b52811fe7837ce1293b1d3542b244f27f44182af8287fc9f4e08f120c6c57696fcd39b4d992477889d04e6882829f5fe556304a281dce258b78a1f0708f1ae010100000001b592ca038eaa9c1b698a049b09be8ee8972b5d0eca29c19946027ba9248acb03000000004847304402200f992d5dbec6edb143f76c14e4538e0a50d66bae27c683cf4291e475287ec6af022010bae9443390aadbd2e2b8b9f757beea26d3f5c345f7e6b4d81b3d390edd381801fdffffff022eb142000000000023210338b2490eaa949538423737cd83449835d1061dca88f4ffaca7181bcac67d2095ac0000000000000000226a20f004678a06000808f120977ac39d89bb8b879d4a2c38fca48a040c82637936707fc452c9db1390b515c80808f02074268b23e614997d18c7c063d8d82d7e1db57b5fc4346cc47ac2c46d54168d710808f120560c45b854f8507c8bfacf2662fef269c208a7e5df5c3145cbce417ecacc595e0808f1200dba8721b9cd4ac7c2fcc7e15ba2cb9f2906bfc577c212747cd352d61b5d7fdb0808f12081107a010d527d18baa874bc99c19a3a7a25dfe110a4c8985bf30f6c3e77baed0808f020ca3cdcd7093498b3f180b38a9773207e52fca992c2db1d660fdfa1b329500c390808f020ca6c6464dd02ced64c9c82246ccfc626caa78d9e624cc11013e3b4bbc09e98910808f0201c7ae0feac018fa19bd8459a4ae971b3e6c816a87254317e0a9f0ec9425ba7610808f12090263a73e415a975dc07706772dbb6200ef0d0a23006218e65d4a5d8112067300808f12079530163b0d912249438628bd791ac9402fa707eb314c6237b0ef90271625c840808000588960d73d7190103e8941a&quot;</span>
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Verify">Verify</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>The request is correctly accepted by the server which return a timestamp if the digest has been committed in the blockchain.</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;timestamp&quot;</span>: {
+    <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
+    <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
           <h1>Schema Definitions</h1>
           <div id="definition-Digest" class="definition panel" data-traverse-target="definition-Digest">
             <h2 class="panel-title">
@@ -399,6 +517,36 @@
                 <section>
                   <h5>Example</h5>
                   <!-- <div class="hljs"> --><pre><code class="hljs lang-json"><span class="hljs-string">&quot;c775d5cc6dab23684842dc86ffcffb34c8022f0819f6729cbd9768cabd25b5af&quot;</span>
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Verify" class="definition panel" data-traverse-target="definition-Verify">
+            <h2 class="panel-title">
+              <a name="/definitions/Verify"></a>Verify: application/json
+              <!-- <span class="json-property-type"><span class="json-property-type">application/json</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>description</p>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;timestamp&quot;</span>: {
+    <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
+    <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
+  }
+}
 </code></pre>
                   <!-- </div> -->
                 </section>
@@ -447,6 +595,77 @@
               </div>
             </div>
           </div>
+          <div id="definition-Result" class="definition panel" data-traverse-target="definition-Result">
+            <h2 class="panel-title">
+              <a name="/definitions/Result"></a>Result: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="status">
+                      <span class="json-property-name">status:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-enum" title="Possible values">
+                        <span class="json-property-enum-item">ok</span>,
+                        <span class="json-property-enum-item">ko</span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="message" class="has-description">
+                      <span class="json-property-name">message:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>a human readable message</p>
+                    </dd>
+                    <dt data-property-name="code" class="has-description">
+                      <span class="json-property-name">code:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-format">(int32)</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>a number representing the status, if 0 is ok otherwise it depends on the method</p>
+                    </dd>
+                    <dt data-property-name="value">
+                      <span class="json-property-name">value:</span>
+                      <span class="json-property-type">
+                        <span class="json-schema-ref-object">
+                          <a class="json-schema-ref" href="#/definitions/Verify">Verify</a>
+                        </span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;ok&quot;</span>,
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;Everything is ok!&quot;</span>,
+  <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: {
+    <span class="hljs-attr">&quot;timestamp&quot;</span>: {
+      <span class="hljs-attr">&quot;unix&quot;</span>: <span class="hljs-number">1432825200</span>,
+      <span class="hljs-attr">&quot;human&quot;</span>: <span class="hljs-string">&quot;Thu May 28 2015 (UTC)&quot;</span>
+    }
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
           <div id="definition-CompleteReceipt" class="definition panel" data-traverse-target="definition-CompleteReceipt">
             <h2 class="panel-title">
               <a name="/definitions/CompleteReceipt"></a>CompleteReceipt: binary
@@ -459,7 +678,7 @@
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-description">
-                  <p>An OpenTimestamps receipt in binary format. This receipt contains all the information to prove the digest <code>05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9</code> commit to the bitcoin blockchain. The output is not in verbose mode as the previous so it doesn&#39;t show intermediate result
+                  <p>An OpenTimestamps receipt in binary format (showed as hex string just for reader&#39;s convenience). This receipt contains all the information to prove the digest <code>05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9</code> commit to the bitcoin blockchain. The output is not in verbose mode as the previous so it doesn&#39;t show intermediate result
                     <br>
                     <div style="font-family: courier; overflow-x: scroll; border-style: solid; border-width: 1px; padding: 5px;"> File sha256 hash: 05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9
                       <br>Timestamp:

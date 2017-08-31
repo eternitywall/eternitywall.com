@@ -74,7 +74,33 @@ paths:
           description: The computed signature does not match. Verify with the vendor that your public key is enabled (To create your eckey pair you can use this [tool](https://github.com/eternitywall/create-eckey)). Verify that your signing the correct message (the hex string representing the submitted digest). Verify you are using the correct signing algorithm (bitcoin signing text messages).
       security:
         - signature: []
-
+  /verify/{digest}:
+    post:
+      description: Verify a timestamp receipt providing the `digest`. This API method is provided for convenience but by asking our API you are trusting the answer from the server while you could verify by yourself if you have a blockchain.
+      operationId: verifydigest
+      consumes:
+        - application/octet-stream
+      produces:
+        - application/json
+      parameters:
+      - in: body
+        description: The ots **binary** receipt to verify.
+        required: true
+        type: binary
+        schema:
+            $ref: '#/definitions/CompleteReceipt'
+      - in: path
+        name: digest
+        description: the document `digest` to verify.
+        required: true
+        type: string
+        schema:
+            $ref: '#/definitions/Digest'
+      responses:
+        200:
+          description: The request is correctly accepted by the server which return a timestamp if the digest has been committed in the blockchain.
+          schema:
+            $ref: '#/definitions/Verify'
 securityDefinitions:
   signature:
     description: The used signature is the bitcoin message signature using ECDSA with the curve secp256k1. What is being signed is specified in the relative method description. Both the [Java](https://github.com/opentimestamps/java-opentimestamps) and the [Javascript](https://github.com/opentimestamps/javascript-opentimestamps) implementation of OpenTimestamps perform this authentication through signature [here](https://github.com/opentimestamps/javascript-opentimestamps/blob/master/src/calendar.js#L91) and [here](https://github.com/opentimestamps/java-opentimestamps/blob/master/src/main/java/com/eternitywall/ots/Calendar.java#L68).
@@ -89,6 +115,15 @@ definitions:
       A digest in **binary**, usually some sort of hash of a document.<br>
       Examples represent this value as an hex string but the API consumes and produce binary data"
     example: "c775d5cc6dab23684842dc86ffcffb34c8022f0819f6729cbd9768cabd25b5af"
+
+  Verify:
+    type: application/json
+    description: >-
+      description
+    example:
+      timestamp:
+        unix: 1432825200
+        human: "Thu May 28 2015 (UTC)"
 
   IncompleteReceipt:
     type: "binary"
@@ -110,11 +145,32 @@ definitions:
 
     example: "004f70656e54696d657374616d7073000050726f6f6600bf89e2e884e89294010805c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9f010e754bf93806a7ebaa680ef7bd0114bf408f010b573e8850cfd9e63d1f043fbb6fc250e08f10457cfa5c4f0086fb1ac8d4e4eb0e70083dfe30d2ef90c8e2e2d68747470733a2f2f616c6963652e6274632e63616c656e6461722e6f70656e74696d657374616d70732e6f7267"
 
+  Result:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "ok"
+        - "ko"
+        example: "ok"
+      message:
+        type: "string"
+        description: "a human readable message"
+        example: "Everything is ok!"
+      code:
+        type: integer
+        format: int32
+        description: "a number representing the status, if 0 is ok otherwise it depends on the method"
+        example: 0
+      value:
+        type: object
+        $ref: '#/definitions/Verify'
 
   CompleteReceipt:
     type: "binary"
     description:
-      "An OpenTimestamps receipt in binary format. This receipt contains all the information to prove the digest `05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9` commit to the bitcoin blockchain. The output is not in verbose mode as the previous so it doesn't show intermediate result<br>
+      "An OpenTimestamps receipt in binary format (showed as hex string just for reader's convenience). This receipt contains all the information to prove the digest `05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9` commit to the bitcoin blockchain. The output is not in verbose mode as the previous so it doesn't show intermediate result<br>
       <div style=\"font-family: courier; overflow-x: scroll; border-style: solid; border-width: 1px; padding: 5px;\">
       File sha256 hash: 05c4f616a8e5310d19d938cfd769864d7f4ccdc2ca8b479b10af83564b097af9
       <br>Timestamp:
