@@ -2,9 +2,19 @@ swagger: '2.0'
 info:
   description: |
     This is the OpenTimestamps authenticated calendar API provided by [Eternity Wall](https://eternitywall.com). To use this API you need to [contact us](mailto:api@eternitywall.com) for an account.<br>
-    The available [OpenTimestamps](https://opentimestamps.org) public calendars provide almost the same interface but they are not authenticated and don't provide any SLA.
-    Another difference is that if you loose the receipt public calendars doesn't store all the data needed from the caller's hash to the blockchain and thus you loose your timestamp. This calendar store the relevant information, thus providing the caller's hash you can retrieve all the timestamp.
-    Another advantage of this kind of calendar is that if another anchoring mechanism is added from the API side, client does not need to update.
+    The available [OpenTimestamps](https://opentimestamps.org) public calendars provide the same service with the same interface but this authenticated API provide the following advantages:
+
+      * Tunable Service Level Agreement (SLA) with the provider for the following parameters:
+        * API call response time.
+        * Blockchain commitment time indepentently from network conditions.
+      * This API stores every commitment data from the client, differently from the public     infrasctructure. This way the client doesn't need to store the partial receipt to obtain the full receipt cause he can ask for the full receipt with the same commitment used to create the receipt (usually the hash of the data).
+      * Any new anchoring mechanism on other blockchain added server side comes for free for the client without needing to upgrade their software.
+      * Provide optional http callback to the client when receipts are ready, avoiding the client to do polling. The callback is made to a URL specified by the client and contains a query parameter called `digest` with the value of the upgraded digest. The client could then call the [/timestamp](#operation--timestamp--digest--get) endpoint for the receipt.
+      The callback is called for a specific commitment digest whenever there are new result in the receipt, since there could be multiple calendar server and different blockchains this means the callback for the same digest could be called more than once.
+      * A [verify](#operation--verify--digest--post) endpoint wich allows to verify provided receipts, thus permit the client to be blockchainless. This method must be used consciounsly because require trust in the service provider, which is simply not needed if the client is able to check the truth in the blockchain.
+      * There are [several libraries](https://github/opentimestamps) in different languages to call the calendar public servers and manage receipts but this API potentially doesn't need any specific library from the client.
+
+    Some software libraries don't validate the SSL certificate the API use which is signed by [let's encrypt](https://letsencrypt.org/). In such case try the endpoint [https://eternitywall-api.appspot.com/authcal/v1](https://eternitywall-api.appspot.com/authcal/v1)
   version: 0.1.0
   title: OpenTimestamps authenticated calendar
   #termsOfService: https://eternitywall.com/terms/
