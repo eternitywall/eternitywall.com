@@ -59,6 +59,22 @@
           <!-- </li> -->
           <!-- </ul>
               </section> -->
+          <!-- <section>
+                <a href="#path--iban-verify">/iban/verify</a>
+                <ul> -->
+          <!-- <li> -->
+          <a href="#operation--iban-verify-post"> POST /iban/verify </a>
+          <!-- </li> -->
+          <!-- </ul>
+              </section> -->
+          <!-- <section>
+                <a href="#path--iban-get--public_key_hash-">/iban/get/{public_key_hash}</a>
+                <ul> -->
+          <!-- <li> -->
+          <a href="#operation--iban-get--public_key_hash--get"> GET /iban/get/{public_key_hash} </a>
+          <!-- </li> -->
+          <!-- </ul>
+              </section> -->
           <h5>Schema Definitions</h5>
           <a href="#definition-Number"> Number </a>
           <a href="#definition-Result"> Result </a>
@@ -761,6 +777,283 @@
       {
         <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;00413335555555&quot;</span>,
         <span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;n1WX9q5ACfEJxu1KRJSNVHLZxVBHage5Nj&quot;</span>
+      }
+    ]
+  },
+  <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">0</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-security">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="swagger-request-security-schema"></th>
+                        <th class="swagger-request-security-scopes"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="#security-definition-apikey">apikey</a>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+          <span id="path--iban-verify"></span>
+          <div id="operation--iban-verify-post" class="operation panel" data-traverse-target="operation--iban-verify-post">
+            <h2 class="operation-title">
+              <span class="operation-name">
+                <span class="operation-name">POST</span>
+                <span class="operation-path">/iban/verify</span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>This method verify the <code>{secret_code}</code> sent via SMS with a previous call to
+                    <em>/sendsms/<code>{number}</code></em> match the one provided. If this happen the phone_number_hash, iban_hash, and public_key_hash are saved for retriveal with /iban/ibanh/*</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">phone_number_hash</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The phone number hash</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">formData</div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">secret_code</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The sected code received through sms</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">int</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">formData</div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">iban_hash</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The hash of the recipient iban</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">formData</div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">public_key_hash</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The public key hash of the sender</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">formData</div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>successful operation, or unsuccesfull if secret code doesn&#39;t match (code=2)</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Bad input parameters</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;ko&quot;</span>,
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;secret code does not match&quot;</span>,
+  <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">2</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-security">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="swagger-request-security-schema"></th>
+                        <th class="swagger-request-security-scopes"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="#security-definition-apikey">apikey</a>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+          <span id="path--iban-get--public_key_hash-"></span>
+          <div id="operation--iban-get--public_key_hash--get" class="operation panel" data-traverse-target="operation--iban-get--public_key_hash--get">
+            <h2 class="operation-title">
+              <span class="operation-name">
+                <span class="operation-name">GET</span>
+                <span class="operation-path">/iban/get/{public_key_hash}</span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>this methods return the <code>{iban_hash}</code> sent from the owner of <code>{public_key_hash}</code>.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">public_key_hash</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The <code>{public_key_hash}</code> of the user sending to iban</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">path</div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref"></div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>successful operation</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;ok&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: {
+    <span class="hljs-attr">&quot;ibans&quot;</span>: [
+      {
+        <span class="hljs-attr">&quot;phoneNumberHash&quot;</span>: <span class="hljs-string">&quot;7A557D06253A7959CCD7B5E73582A708ACFB7EDF8AC0340D70F1653CB5048BD5&quot;</span>,
+        <span class="hljs-attr">&quot;ibanHash&quot;</span>: <span class="hljs-string">&quot;7A557D06253A7959CCD7B5E73582A708ACFB7EDF8AC0340D70F1653CB5048BD5&quot;</span>,
+        <span class="hljs-attr">&quot;publicKeyHash&quot;</span>: <span class="hljs-string">&quot;n1o1Pqt2sCNwKiY5eYx5HXoFXn7VKcefXi&quot;</span>
       }
     ]
   },

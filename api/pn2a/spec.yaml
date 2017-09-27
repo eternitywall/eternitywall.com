@@ -183,6 +183,78 @@ paths:
       security:
         - apikey: []
 
+  /iban/verify:
+    post:
+      description: This method verify the `{secret_code}` sent via SMS with a previous call to */sendsms/`{number}`* match the one provided. If this happen the phone_number_hash, iban_hash, and public_key_hash are saved for retriveal with /iban/ibanh/*
+      operationId: ibanverify
+      consumes:
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      parameters:
+      - name: phone_number_hash
+        in: formData
+        description: The phone number hash
+        required: true
+        type: string
+      - name: secret_code
+        in: formData
+        description: The sected code received through sms
+        required: true
+        type: int
+      - name: iban_hash
+        in: formData
+        description: The hash of the recipient iban
+        required: true
+        type: string
+      - name: public_key_hash
+        in: formData
+        description: The public key hash of the sender
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation, or unsuccesfull if secret code doesn't match (code=2)
+          schema:
+            $ref: "#/definitions/Result"
+            example:
+              status: "ko"
+              message: "secret code does not match"
+              code: 2
+        400:
+          description: Bad input parameters
+      security:
+        - apikey: []
+
+  /iban/get/{public_key_hash}:
+    get:
+      description: this methods return the `{iban_hash}` sent from the owner of `{public_key_hash}`.
+      operationId: getiban
+      produces:
+      - application/json
+      parameters:
+      - name: public_key_hash
+        in: path
+        description: The  `{public_key_hash}` of the user sending to iban
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            example:
+              status: "ok"
+              value:
+                ibans:
+                  -
+                    phoneNumberHash: "7A557D06253A7959CCD7B5E73582A708ACFB7EDF8AC0340D70F1653CB5048BD5"
+                    ibanHash: "7A557D06253A7959CCD7B5E73582A708ACFB7EDF8AC0340D70F1653CB5048BD5"
+                    publicKeyHash: "n1o1Pqt2sCNwKiY5eYx5HXoFXn7VKcefXi"
+
+              code: 0
+      security:
+        - apikey: []
+
 securityDefinitions:
   apikey:
     description: This is a static api key
