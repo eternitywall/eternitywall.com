@@ -4,9 +4,9 @@ info:
     This is the OpenTimestamps authenticated calendar API provided by [Eternity Wall](https://eternitywall.com). To use this API you need to [contact us](mailto:api@eternitywall.com) for an account.<br>
     The available [OpenTimestamps](https://opentimestamps.org) public calendars provide the same service with the same interface but this authenticated API provide the following advantages:
 
-      * Tunable Service Level Agreement (SLA) with the provider for the following parameters:
+      * Customizable Service Level Agreement (SLA) with the provider for the following parameters:
         * API call response time.
-        * Blockchain commitment time indepentently from network conditions.
+        * Blockchain commitment indepentent from network fee conditions.
       * This API stores every commitment data from the client, differently from the public     infrasctructure. This way the client doesn't need to store the partial receipt to obtain the full receipt cause he can ask for the full receipt with the same commitment used to create the receipt (usually the hash of the data).
       * Any new anchoring mechanism on other blockchain added server side comes for free for the client without needing to upgrade their software.
       * Provide optional http callback to the client when receipts are ready, avoiding the client to do polling. The callback is made to a URL specified by the client and contains a query parameter called `digest` with the value of the upgraded digest and a parameter `type` containing the type of commitment (actual possible value are BTC and ETH). The client could then call the [/timestamp](#operation--timestamp--digest--get) endpoint for the receipt.
