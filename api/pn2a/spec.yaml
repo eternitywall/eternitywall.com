@@ -3,11 +3,11 @@ info:
   description: |
     This is the PhoneNumberToAddress (pn2a) API to link a verified phone number to an address. The verification happens through a secret code sent with an SMS. This API is [described](https://eternitywall.com/api/pn2a/spec.yaml) with [OpenAPI](https://github.com/OAI/OpenAPI-Specification/).
 
-    If your library have https problem with the endpoint https://api.eternitywall.com/pn2a/v1 (let's encrypt certificate) try: https://eternitywall-api.appspot.com/
+    If your library have https problem with the endpoint https://api.eternitywall.com (let's encrypt certificate) try: https://eternitywall-api.appspot.com
 
     The test endpoint of the library is:
-    https://eternitywall-api-test.appspot.com/
-    
+    https://eternitywall-api-test.appspot.com
+
   version: 0.1.0
   title: Phone number to address
   #termsOfService: https://eternitywall.com/terms/
