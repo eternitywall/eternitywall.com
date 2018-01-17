@@ -12,7 +12,7 @@ info:
       * Provide optional http callback to the client when receipts are ready, avoiding the client to do polling. The callback is made to a URL specified by the client and contains a query parameter called `digest` with the value of the upgraded digest and a parameter `type` containing the type of commitment (actual possible value are BTC and ETH). The client could then call the [/timestamp](#operation--timestamp--digest--get) endpoint for the receipt.
       The callback is called for a specific commitment digest whenever there are new result in the receipt, since there could be multiple calendar server and different blockchains this means the callback for the same digest could be called more than once.
       * A [verify](#operation--verify--digest--post) endpoint wich allows to verify provided receipts, thus permit the client to be blockchainless. This method must be used consciounsly because require trust in the service provider, which is simply not needed if the client is able to check the truth in the blockchain.
-      * There are [several libraries](https://github/opentimestamps) in different languages to call the calendar public servers and manage receipts but this API potentially doesn't need any specific library from the client.
+      * There are [several libraries](https://github.com/opentimestamps) in different languages to call the calendar public servers and manage receipts but this API potentially doesn't need any specific library from the client.
 
     Some software libraries don't validate the SSL certificate the API use which is signed by [let's encrypt](https://letsencrypt.org/). In such case try the endpoint [https://eternitywall-api.appspot.com/authcal/v1](https://eternitywall-api.appspot.com/authcal/v1)
   version: 0.1.0
