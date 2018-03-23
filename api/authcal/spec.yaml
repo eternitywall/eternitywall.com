@@ -1,7 +1,14 @@
 swagger: '2.0'
 info:
   description: |
-    This is the OpenTimestamps authenticated calendar API provided by [Eternity Wall](https://eternitywall.com). To use this API you need to [contact us](mailto:api@eternitywall.com) for an account.<br>
+    This is the OpenTimestamps authenticated calendar API provided by [Eternity Wall](https://eternitywall.com).<br>
+    To use this API you need to:
+
+      * Get in touch [with us](mailto:api@eternitywall.com) and setup a contract with the SLA you need.
+      * Create a bitcoin keypair, you can use your own tool or [this one](https://github.com/eternitywall/create-eckey)
+      * Send us the public key.
+
+    With this process Eternity Wall cannot charge the customer for request they didn't make, because we can't forge the signatures.<br>
     The available [OpenTimestamps](https://opentimestamps.org) public calendars provide the same service with the same interface but this authenticated API provide the following advantages:
 
       * Customizable Service Level Agreement (SLA) with the provider for the following parameters:
