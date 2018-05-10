@@ -14,7 +14,7 @@ info:
       * Customizable Service Level Agreement (SLA) with the provider for the following parameters:
         * API call response time.
         * Blockchain commitment indepentent from network fee conditions.
-      * This API stores every commitment data from the client, differently from the public     infrasctructure. This way the client doesn't need to store the partial receipt to obtain the full receipt cause he can ask for the full receipt with the same commitment used to create the receipt (usually the hash of the data).
+      * This API stores every commitment data from the client, differently from the public infrasctructure. This way the client doesn't need to store the partial receipt to obtain the full receipt cause he can ask for the full receipt with the same commitment used to create the receipt (usually the hash of the data).
       * Any new anchoring mechanism on other blockchain added server side comes for free for the client without needing to upgrade their software.
       * Provide optional http callback to the client when receipts are ready, avoiding the client to do polling. The callback is made to a URL specified by the client and contains a query parameter called `digest` with the value of the upgraded digest and a parameter `type` containing the type of commitment (actual possible value are BTC and ETH). The client could then call the [/timestamp](#operation--timestamp--digest--get) endpoint for the receipt.
       The callback is called for a specific commitment digest whenever there are new result in the receipt, since there could be multiple calendar server and different blockchains this means the callback for the same digest could be called more than once.
@@ -22,7 +22,14 @@ info:
       * There are [several libraries](https://github.com/opentimestamps) in different languages to call the calendar public servers and manage receipts but this API potentially doesn't need any specific library from the client.
 
     Some software libraries don't validate the SSL certificate the API use which is signed by [let's encrypt](https://letsencrypt.org/). In such case try the endpoint [https://eternitywall-api.appspot.com/authcal/v1](https://eternitywall-api.appspot.com/authcal/v1)
-  version: 0.1.0
+
+    **Release notes**
+      * Version 0.2.0 - May 10, 2018
+        * The *uri* used for the api was `https://api.eternitywall.com`, which is still running, however to allow better compatibility with the open-source library we moved to `https://auth.calendar.eternitywall.com` which is compatible with the official whitelisted servers. This allows to upgrade receipts with the public libraries without any additional parameter.
+        * To avoid breaking compatibility with customers, this and any future upgrade will go through the *version system*. Any update of the API will keep customers on the previous version, the customers could test the changes by passing the version as [header](#operation--digest-post) parameter, and then ask the provider which is the desired default. The initial default is the last version at the start of the contract.
+        * The `/timestamp` endpoint [now accept](#operation--timestamp--digest--get) the *detached* parameter, allowing full receipt donwload.
+
+  version: 0.2.0
   title: OpenTimestamps authenticated calendar
   #termsOfService: https://eternitywall.com/terms/
   contact:
@@ -32,8 +39,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 schemes:
  - https
-host: api.eternitywall.com
-basePath: /authcal/v1
+host: auth.calendar.eternitywall.com
+basePath: /
 
 
 paths:
@@ -52,6 +59,9 @@ paths:
         type: binary
         schema:
             $ref: '#/definitions/Digest'
+      - in: header
+        name: x-version
+        description: This parameter specify the version of the API, overriding the default value. This is useful for customer to test the compatibility of a new version before asking the provider to upgrade the default behaviour.
       responses:
         200:
           description: The request is correctly accepted by the server which immediately return the receipt in incomplete state (no writes on the blockchain yet). By later calling the */timestamp* method the caller get all the timestamp information of this {digest}.
@@ -80,6 +90,12 @@ paths:
       - in: query
         name: allow-dubious
         description: if this parameter exists the receipt will contain also commit on blockchain considered *dubious* from timestamp perspective by the OpenTimestamps developer (eg. Ethereum)
+      - in: query
+        name: detached
+        description: if this parameter exists the data returned will be a complete `.ots`, thus containing the header and supposing the `digest` is the element the receipt refer to supposing `sha256` as the hash function used to create the hash. This value could also be `sha1`, `ripemd160`, `keccak256` if the digest of document was created with one of this hash function.
+      - in: header
+        name: x-version
+        description: This parameter specify the version of the API, overriding the default value. This is useful for customer to test the compatibility of a new version before asking the provider to upgrade the default behaviour.
       responses:
         200:
           description: The request is correctly accepted by the server which return a complete receipt if the timestamp transaction is correctly inserted in the bitcoin blockchain and 6 confirmation is passed (to avoid possible reorgs). If the receipt is still pending the IncompleteReceipt is returned.
@@ -113,6 +129,10 @@ paths:
         type: string
         schema:
             $ref: '#/definitions/Digest'
+      - in: header
+        name: x-version
+        $ref: '#/definitions/VersionDescription'
+        
       responses:
         200:
           description: The request is correctly accepted by the server which return a timestamp if the digest has been committed in the blockchain.
@@ -126,6 +146,8 @@ securityDefinitions:
     in: header
 
 definitions:
+  VersionDescription:
+    description: Ciao
   Digest:
     type: "binary"
     description: >-

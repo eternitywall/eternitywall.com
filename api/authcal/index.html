@@ -102,11 +102,28 @@
                   <a href="https://letsencrypt.org/">let&#39;s encrypt</a>. In such case try the endpoint
                   <a href="https://eternitywall-api.appspot.com/authcal/v1">https://eternitywall-api.appspot.com/authcal/v1</a>
                 </p>
+                <p>
+                  <strong>Release notes</strong>
+                </p>
+                <ul>
+                  <li>Version 0.2.0 - May 10, 2018
+                    <ul>
+                      <li>The
+                        <em>uri</em> used for the api was <code>https://api.eternitywall.com</code>, which is still running, however to allow better compatibility with the open-source library we moved to <code>https://auth.calendar.eternitywall.com</code> which is compatible with the official whitelisted servers. This allows to upgrade receipts with the public libraries without any additional parameter.</li>
+                      <li>To avoid breaking compatibility with customers, this and any future upgrade will go through the
+                        <em>version system</em>. Any update of the API will keep customers on the previous version, the customers could test the changes by passing the version as
+                        <a href="#operation--digest-post">header</a> parameter, and then ask the provider which is the desired default</li>
+                      <li>The <code>/timestamp</code> endpoint
+                        <a href="#operation--timestamp--digest--get">now accept</a> the
+                        <em>detached</em> parameter, allowing full receipt donwload.</li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
               <div class="doc-examples">
                 <section>
                   <h5>API Endpoint</h5>
-                  <!-- <div class="hljs"> --><pre><code>https://api.eternitywall.com/authcal/v1</code></pre>
+                  <!-- <div class="hljs"> --><pre><code>https://auth.calendar.eternitywall.com/</code></pre>
                   <!-- </div> -->
                   <h5>Contact:
                     <a href="mailto:api@eternitywall.com">api@eternitywall.com</a>
@@ -115,7 +132,7 @@
                     <span>https</span>
                   </h5>
                   <h5>Version:
-                    <span>0.1.0</span>
+                    <span>0.2.0</span>
                   </h5>
                 </section>
               </div>
@@ -193,6 +210,27 @@
                         <em>application/octet-stream</em>).</p>
                       <!-- </div> -->
                     </div>
+                  </div>
+                </section>
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">x-version</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>This parameter specify the version of the API, overriding the default value. This is useful for customer to test the compatibility of a new version before asking the provider to upgrade the default behaviour.</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">header</div>
                   </div>
                 </section>
               </div>
@@ -327,6 +365,25 @@
                     <div class="prop-value">
                       <p>if this parameter exists the receipt will contain also commit on blockchain considered
                         <em>dubious</em> from timestamp perspective by the OpenTimestamps developer (eg. Ethereum)</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">query</div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">detached</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>if this parameter exists the data returned will be a complete <code>.ots</code>, thus containing the header and supposing the <code>digest</code> is the element the receipt refer to supposing <code>sha256</code> as the hash function used to create the hash. This value could also be <code>sha1</code>, <code>ripemd160</code>, <code>keccak256</code> if the digest of document was created with one of this hash function.</p>
                     </div>
                   </div>
                   <div class="prop-row prop-inner">
