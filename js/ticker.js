@@ -2,6 +2,12 @@
 
 
 $.getJSON( "https://blog.eternitywall.com/feed.json", function( data ) {
+
+    var height = 200;
+    if ($(window).width() < 768){
+        height = 300;
+    }
+
     data.forEach(function(post){
         var e = $( document.createElement('li') );
 
@@ -12,7 +18,7 @@ $.getJSON( "https://blog.eternitywall.com/feed.json", function( data ) {
         var year = date.getFullYear();
 
         e.addClass("post-preview")
-            .css("height","200px")
+            .css("height",height+"px")
             .append("<img src='" + post.image + "' class='thumb img-responsive'>")
             .append(
                 "<a href='" + post.url +"'>" +
@@ -26,7 +32,7 @@ $.getJSON( "https://blog.eternitywall.com/feed.json", function( data ) {
     })
 
     $('#ticker').newsTicker({
-        row_height: 200,
+        row_height: height,
         max_rows: 2,
         speed: 1000
     })
