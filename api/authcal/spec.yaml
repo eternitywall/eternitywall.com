@@ -148,7 +148,8 @@ securityDefinitions:
     name: x-signature
     type: string
     in: header
-
+    
+definitions:
   Digest:
     type: "binary"
     description: >-
