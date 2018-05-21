@@ -94,6 +94,10 @@ paths:
         name: detached
         type: string
         description: if this parameter exists the data returned will be a complete `.ots`, thus containing the header and supposing the `digest` is the element the receipt refer to supposing `sha256` as the hash function used to create the hash. This value could also be `sha1`, `ripemd160`, `keccak256` if the digest of document was created with one of this hash function.
+      - in: query
+        name: shrink
+        type: string
+        description: if this parameter exists the data returned will contain only the oldest BitcoinBlockHeaderAttestation.
       - in: header
         name: x-version
         description: This parameter specify the version of the API, overriding the default value. This is useful for customer to test the compatibility of a new version before asking the provider to upgrade the default behaviour.
