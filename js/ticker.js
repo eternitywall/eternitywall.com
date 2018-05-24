@@ -8,7 +8,10 @@ $.getJSON( "https://blog.eternitywall.com/feed.json", function( data ) {
         height = 300;
     }
 
-    data.forEach(function(post){
+
+    data.filter((el,index) => index<10 )
+    .forEach(function(post){
+
         var e = $( document.createElement('li') );
 
         var date = new Date(Date.parse(post.date) );
