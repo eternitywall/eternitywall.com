@@ -11,6 +11,9 @@ body {
     @include body-font;
 }
 
+.post-title {
+  text-transform: inherit;
+}
 .text-muted {
     color: $gray-light;
 }
