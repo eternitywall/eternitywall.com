@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Eternity Wall</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Blog Theme CSS -->
+    <link href="https://blog.eternitywall.com/css/custom.css" rel="stylesheet">
+    <link href="https://blog.eternitywall.com/css/syntax.css" rel="stylesheet">
+    <link href="https://blog.eternitywall.com/css/clean-blog.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="https://eternitywall.com/css/agency.css">
+    <link rel="stylesheet" href="https://opentimestamps.org/assets/stylesheets/application.css">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+<style>
+    .navbar-custom .nav li a {
+        color: #0089f3;
+    }
+    #mainNav {
+        position: relative;
+    }
+</style>
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">Eternity Wall</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#use-cases">Use cases</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#team">Team</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#api">API</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#customer">Customer</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#brochure">Brochure</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#blog">Blog</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>-->
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<!-- STAMP AND VERIFY -->
+<section class="stamp-and-verify" id="use-cases">
+    <div class="container">
+        <div class="" id="stamp">
+            <p class="stamp-and-verify-block-title" style="text-align: center;">Stamp & Verify</p>
+
+            <p class="stamp-and-verify-description">
+            </p>
+            <div class="stamp-and-verify-drop-zone" id="document_holder">
+                <span class="filename"></span>
+                <span class="filesize"></span>
+                <p class="hash">
+                    Drop here a file to <b>stamp</b><br>
+                    OR<br>
+                    an <i>.ots</i> proof file to <b>verify</b>
+                </p>
+            </div>
+            <input id="document_input" type="file" style="display:none">
+
+            <br>
+
+            <div class="stamp-and-verify-drop-zone" id="stamped_holder" style="display:none">
+                <span class="filename"></span>
+                <span class="filesize"></span>
+                <p class="hash">
+                    <br>Drop here the stamped file
+                </p>
+            </div>
+            <input id="stamped_input" type="file" style="display:none">
+
+            <div class="stamp-and-verify-result result result_stamp" id="result_stamp">
+                <p class="result-description">
+                    The hash is calculated on your browser preserving your privacy. <a href="https://github.com/opentimestamps/opentimestamps.org/pull/7">More</a>...<br>
+                    Timestamping proof download will start automatically after uploading document.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="statuses-container">
+            <div class="statuses statuses_hashing" id="statuses" style="display: none">
+                <a href="#" class="statuses-info" style="display: none"></a>
+                <p class="statuses-title">52%</p>
+                <p class="statuses-description">
+                    Hashing
+                </p>
+            </div>
+        </div>
+
+        <br>
+        <!--<div  class="alert alert-warning" role="alert" id="status" style="display:none">
+        </div>
+        <div id="loading" style="display:none">
+          <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="alert alert-warning" role="alert" id="alertMessage" style="display:none">
+        </div>
+        <div class="alert alert-success" role="alert" id="successMessage" style="display:none">
+        </div>
+        <div class="alert alert-danger" role="alert" id="dangerMessage" style="display:none">
+        </div>
+        <div class="alert alert-warning" role="alert" id="warningMessage" style="display:none">
+        </div>-->
+</section>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="copyright">Eternity Wall 2018</span>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    <li><a href="https://twitter.com/eternitywall"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li><a href="https://www.facebook.com/eternitywall"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/company/10391673"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <span class="copyright">VAT IT 09487100969</span>
+                <!--<ul class="list-inline quicklinks">
+                  <li><a href="#">Privacy Policy</a>
+                  </li>
+                  <li><a href="#">Terms of Use</a>
+                  </li>
+                </ul>-->
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- OpenTimestamps JavaScript -->
+<script src="https://opentimestamps.org/assets/javascripts/application.js"></script>
+<script src="https://opentimestamps.org/assets/javascripts/vendor/moment.min.js"></script>
+<script src="https://opentimestamps.org/assets/javascripts/vendor/moment-timezone-with-data-2012-2022.min.js"></script>
+<script src="https://opentimestamps.org/assets/javascripts/vendor/opentimestamps.min.js"></script>
+<script src="https://opentimestamps.org/assets/javascripts/crypto-js/crypto-js.js"></script>
+<script src="https://opentimestamps.org/assets/javascripts/index.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-64322985-10', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
