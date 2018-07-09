@@ -73,7 +73,7 @@ paths:
       - in: query
         name: op
         type: string
-        description: this optional parameter specify wich hash was used to create the digest, when creating a detached timestamp this hash will be specified in the header. When this is not specified it is used `sha256 as default`
+        description: this optional parameter specify wich hash was used to create the digest, when creating a detached timestamp this hash will be specified in the header. When this is not specified it is used `sha256` as default
       - in: query
         name: email
         type: string
@@ -127,10 +127,6 @@ paths:
             $ref: '#/definitions/Receipt'
         400:
           description: Bad input parameters. Verify the {digest} is correctly encoded as hex string.
-        401:
-          description: The computed signature does not match. Verify with the vendor that your public key is enabled (To create your eckey pair you can use this [tool](https://github.com/eternitywall/create-eckey)). Verify that your signing the correct message (the hex string representing the submitted digest). Verify you are using the correct signing algorithm (bitcoin signing text messages).
-      security:
-        - signature: []
   /verify/{digest}:
     post:
       description: Verify a timestamp receipt providing the `digest`. This API method is provided for convenience but by asking our API you are trusting the answer from the server while you could verify by yourself if you have a blockchain.
